@@ -1,5 +1,5 @@
 //
-//  PictureURL+CoreDataProperties.swift
+//  PictureData+CoreDataProperties.swift
 //  Virtural Tourist
 //
 //  Created by Carl Lee on 1/18/17.
@@ -10,13 +10,12 @@ import Foundation
 import CoreData
 
 
-extension PictureURL {
+extension PictureData {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<PictureURL> {
-        return NSFetchRequest<PictureURL>(entityName: "PictureURL");
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<PictureData> {
+        return NSFetchRequest<PictureData>(entityName: "PictureData");
     }
 
-    @NSManaged public var url: String?
     @NSManaged public var photoData: NSData?
     @NSManaged public var location: Location?
 

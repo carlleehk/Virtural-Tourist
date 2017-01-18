@@ -1,5 +1,5 @@
 //
-//  PictureURL+CoreDataClass.swift
+//  PictureData+CoreDataClass.swift
 //  Virtural Tourist
 //
 //  Created by Carl Lee on 1/18/17.
@@ -9,15 +9,14 @@
 import Foundation
 import CoreData
 
-@objc(PictureURL)
-public class PictureURL: NSManagedObject {
+@objc(PictureData)
+public class PictureData: NSManagedObject {
     
-    convenience init(url: String, image: NSData?, context: NSManagedObjectContext){
+    convenience init(image: NSData, context: NSManagedObjectContext){
         
-        if let ent = NSEntityDescription.entity(forEntityName: "PictureURL", in: context){
+        if let ent = NSEntityDescription.entity(forEntityName: "PictureData", in: context){
             
             self.init(entity: ent, insertInto: context)
-            self.url = url
             self.photoData = image
             
         } else{

@@ -18,7 +18,6 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
     var long: Double?
     var lat: Double?
     var location: Location? = nil
-    var picURLs: NSMutableArray?
 
     var insertedIndexPath: [NSIndexPath]!
     var deletedIndexPath: [NSIndexPath]!
@@ -75,22 +74,16 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         } else{
             return 0
         }
-        //return (location?.url?.count)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let picURL = fetchedResultsController?.object(at: indexPath) as! PictureURL
+        let picURL = fetchedResultsController?.object(at: indexPath) as! PictureData
         print(picURL)
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picture", for: indexPath) as! PictureCollectionViewCell
         
-        if let url = NSURL(string: picURL.url!){
-            print(url)
-            if let data = NSData(contentsOf: url as URL){
-               image = UIImage(data: data as Data)
-            }
-        }
+        image = UIImage(data: picURL.photoData as! Data)
         
         cell.backgroundView = UIImageView(image: image)
         
@@ -109,7 +102,6 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         if cell?.isSelected == true{
             
             cell?.alpha = 0.5
-            //stack.context.delete(fetchedResultsController?.object(at: indexPath) as! PictureURL)
         }
         
     }
@@ -147,16 +139,17 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
                 
                 for items in result!{
                     let imageURLString = items[Constants.FlickrResponseKeys.MediumURL] as? String
-                    self.picURLs?.adding(imageURLString!)
                     print("URLs:\(imageURLString!)")
-                    let picURL = PictureURL(url: imageURLString!, context: self.stack.context)
-                    picURL.location = self.location
+                    
+                    let data = NSData(contentsOf: NSURL(string: imageURLString!) as! URL)
+                    let picData = PictureData(image: data!, context: self.stack.context)
+                    picData.location = self.location
                     do{
                         try self.stack.saveContext()
                     } catch{
                         print("Error while saving")
                     }
-                    print(picURL)
+                    print(picData)
                 }
             } else{
                 print("some error")
@@ -178,7 +171,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
             
             for index in indexPaths!{
                 
-                stack.context.delete(fetchedResultsController?.object(at: index) as! PictureURL)
+                stack.context.delete(fetchedResultsController?.object(at: index) as! PictureData)
             }
             isEdit = false
              collectionLabel.setTitle("New Collection", for: .normal)

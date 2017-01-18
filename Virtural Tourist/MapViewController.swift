@@ -22,7 +22,7 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
 
     
     override func viewWillAppear(_ animated: Bool) {
-        viewDidLoad()
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
         
         var annotations = [MKPointAnnotation]()
         let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(action(gestureRecognizer:)))
-        uilgr.minimumPressDuration = 2.0
+        uilgr.minimumPressDuration = 0.5
         map.addGestureRecognizer(uilgr)
         
         do{
@@ -176,7 +176,7 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
                 let location = item as? Location
                 let control = storyboard?.instantiateViewController(withIdentifier: "imageScreen") as! PictureViewController
                 
-                let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "PictureURL")
+                let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "PictureData")
                 fr.sortDescriptors = []
                 fr.predicate = NSPredicate(format: "location = %@", argumentArray: [location!])
                 let fc = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)

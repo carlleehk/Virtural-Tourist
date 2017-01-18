@@ -26,10 +26,10 @@ extension Location {
 extension Location {
 
     @objc(addUrlObject:)
-    @NSManaged public func addToUrl(_ value: PictureURL)
+    @NSManaged public func addToUrl(_ value: PictureData)
 
     @objc(removeUrlObject:)
-    @NSManaged public func removeFromUrl(_ value: PictureURL)
+    @NSManaged public func removeFromUrl(_ value: PictureData)
 
     @objc(addUrl:)
     @NSManaged public func addToUrl(_ values: NSSet)
