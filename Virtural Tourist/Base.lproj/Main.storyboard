@@ -139,7 +139,7 @@
                                 </cells>
                             </collectionView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eT0-fp-Psv">
-                                <rect key="frame" x="0.0" y="64" width="375" height="153"/>
+                                <rect key="frame" x="0.0" y="45" width="375" height="153"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -149,16 +149,18 @@
                             <constraint firstItem="Coh-Hc-bOo" firstAttribute="top" secondItem="3yt-sE-gW8" secondAttribute="bottom" id="PJW-PA-78i"/>
                             <constraint firstItem="3yt-sE-gW8" firstAttribute="leading" secondItem="DWV-pO-zzi" secondAttribute="leading" id="QfN-Vi-RSJ"/>
                             <constraint firstAttribute="trailing" secondItem="3yt-sE-gW8" secondAttribute="trailing" id="RyA-rS-ud2"/>
-                            <constraint firstItem="SLP-KO-DNN" firstAttribute="top" secondItem="eT0-fp-Psv" secondAttribute="bottom" constant="50" id="W78-aG-Zcm"/>
+                            <constraint firstItem="SLP-KO-DNN" firstAttribute="top" secondItem="eT0-fp-Psv" secondAttribute="bottom" constant="8" id="W78-aG-Zcm"/>
                             <constraint firstItem="3yt-sE-gW8" firstAttribute="top" secondItem="SLP-KO-DNN" secondAttribute="bottom" id="YsB-dP-EDp"/>
-                            <constraint firstItem="eT0-fp-Psv" firstAttribute="top" secondItem="lcW-ey-t66" secondAttribute="bottom" id="cSa-Jj-DyH"/>
                             <constraint firstAttribute="trailing" secondItem="eT0-fp-Psv" secondAttribute="trailing" id="hby-vi-0t5"/>
                             <constraint firstItem="3yt-sE-gW8" firstAttribute="top" secondItem="SLP-KO-DNN" secondAttribute="bottom" id="mIz-hD-w67"/>
+                            <constraint firstItem="eT0-fp-Psv" firstAttribute="top" secondItem="lcW-ey-t66" secondAttribute="bottom" id="n1q-YA-rWh"/>
                             <constraint firstItem="eT0-fp-Psv" firstAttribute="leading" secondItem="DWV-pO-zzi" secondAttribute="leading" id="ocZ-Ix-AI3"/>
-                            <constraint firstItem="3yt-sE-gW8" firstAttribute="top" secondItem="eT0-fp-Psv" secondAttribute="bottom" constant="489" id="pVr-8p-te7"/>
+                            <constraint firstItem="3yt-sE-gW8" firstAttribute="top" secondItem="eT0-fp-Psv" secondAttribute="bottom" constant="420" id="pVr-8p-te7"/>
+                            <constraint firstItem="SLP-KO-DNN" firstAttribute="top" secondItem="eT0-fp-Psv" secondAttribute="bottom" constant="8" id="ySP-Bb-mlD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qVP-og-4xP"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="collectionFlow" destination="B1z-fF-xlW" id="SF1-xP-lrW"/>
                         <outlet property="collectionLabel" destination="3yt-sE-gW8" id="UDM-lf-FRO"/>
