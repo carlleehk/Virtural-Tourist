@@ -141,7 +141,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
     
     func fetchNewImage(){
         
-        FlickrClient.sharedInstance().displayImageFromFlickrBySearch(lat: lat!, long: long!) { (result, error) in
+        FlickrClient.sharedInstance().displayImageFromFlickrBySearch(lat: self.lat!, long: self.long!) { (result, error) in
             if error == nil{
                 
                 for items in result!{
