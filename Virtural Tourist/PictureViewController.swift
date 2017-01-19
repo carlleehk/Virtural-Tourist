@@ -98,8 +98,9 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
                 } else{
                     
                     print("Downloading Image")
-                    let picData = PictureData(image: data as NSData?, url: nil, context: self.stack.context)
-                    picData.location = self.location
+                    picDatas.photoData = data as NSData?
+                    //let picData = PictureData(image: data as NSData?, url: nil, context: self.stack.context)
+                    //picData.location = self.location
                     do{
                         try self.stack.saveContext()
                     } catch{
