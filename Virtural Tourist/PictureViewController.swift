@@ -55,7 +55,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         if (location?.url?.count)! == 0{
             collectionLabel.isEnabled = false
             self.fetchNewImage()
-            collectionLabel.isEnabled = true
+            
         }
         
         
@@ -86,6 +86,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         
         
         if picDatas.photoData != nil{
+            collectionLabel.isEnabled = true
             cell.activityIndicator.stopAnimating()
             image = UIImage(data: picDatas.photoData as! Data)
             cell.picture.image = image
@@ -176,7 +177,6 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
                     } catch{
                         print("Error while saving")
                     }
-                    //print(picData)
                 }
             } else{
                 print("some error")
@@ -189,6 +189,8 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
 
     @IBAction func RenewCollection(_ sender: Any) {
         if !isEdit{
+            
+            collectionLabel.isEnabled = false
             for item in (fetchedResultsController?.fetchedObjects)!{
                 stack.context.delete(item as! NSManagedObject)
             }
