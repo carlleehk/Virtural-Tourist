@@ -18,7 +18,6 @@ class PictureCollectionViewCell: UICollectionViewCell{
         super.prepareForReuse()
         
         if picture.image == nil{
-            activityIndicator.isHidden = false
             activityIndicator.startAnimating()
         }
     }
