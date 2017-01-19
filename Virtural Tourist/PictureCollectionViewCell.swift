@@ -11,6 +11,15 @@ import UIKit
 class PictureCollectionViewCell: UICollectionViewCell{
     
     @IBOutlet weak var picture: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        if picture.image == nil{
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+        }
+    }
 }

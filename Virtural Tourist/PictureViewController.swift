@@ -83,9 +83,16 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picture", for: indexPath) as! PictureCollectionViewCell
         
-        image = UIImage(data: picURL.photoData as! Data)
         
-        cell.backgroundView = UIImageView(image: image)
+        if picURL.photoData != nil{
+            cell.activityIndicator.stopAnimating()
+            image = UIImage(data: picURL.photoData as! Data)
+            cell.picture.image = image
+        }
+        
+        
+        
+        
         
         return cell
     }
