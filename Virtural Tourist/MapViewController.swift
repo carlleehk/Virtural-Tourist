@@ -175,7 +175,6 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
             } else{
                 let location = item as? Location
                 let control = storyboard?.instantiateViewController(withIdentifier: "imageScreen") as! PictureViewController
-                
                 let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "PictureData")
                 fr.sortDescriptors = []
                 fr.predicate = NSPredicate(format: "location = %@", argumentArray: [location!])
