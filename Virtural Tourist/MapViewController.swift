@@ -15,14 +15,19 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
     @IBOutlet weak var deleteLabel: UILabel!
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    
     var isEdit = false
     let precision = 0.00005
     let fr1 = NSFetchRequest<NSFetchRequestResult>(entityName: "MapRegion")
     let fr2 = NSFetchRequest<NSFetchRequestResult>(entityName: "Location")
+    var annotations = [MKPointAnnotation]()
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let pins = map.annotations
+        map.removeAnnotations(pins)
+        map.addAnnotations(pins)
     }
     
     override func viewDidLoad() {
@@ -32,7 +37,7 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
         map.delegate = self
         deleteLabel.isHidden = true
         
-        var annotations = [MKPointAnnotation]()
+        
         let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(action(gestureRecognizer:)))
         uilgr.minimumPressDuration = 0.5
         map.addGestureRecognizer(uilgr)
@@ -53,28 +58,7 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
             print("Failed to fetch \(error)")
         }
 
-        
-        
-        
-        do{
-            let fer = try stack.context.fetch(fr2) as NSArray!
-            print("the data consist: \(fer)")
-            for item in fer!{
-                let mo = item as! NSManagedObject
-                let lat = mo.value(forKey: "lat") as! Double
-                let long = mo.value(forKey: "long") as! Double
-                print("\(lat), \(long)")
-                let coor = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coor
-                annotations.append(annotation)
-            }
-            
-        } catch{
-            print("Failed to fetch \(error)")
-        }
-        
-
+        fetchPin()
         self.map.addAnnotations(annotations)
         
     }
@@ -192,6 +176,27 @@ class MapViewController: BaseViewController, MKMapViewDelegate {
             print("Failed to fetch \(error)")
         }
     
+    }
+    
+    func fetchPin(){
+        do{
+            let fer = try stack.context.fetch(fr2) as NSArray!
+            print("the data consist: \(fer)")
+            for item in fer!{
+                let mo = item as! NSManagedObject
+                let lat = mo.value(forKey: "lat") as! Double
+                let long = mo.value(forKey: "long") as! Double
+                print("\(lat), \(long)")
+                let coor = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coor
+                annotations.append(annotation)
+            }
+            
+        } catch{
+            print("Failed to fetch \(error)")
+        }
+
     }
 
     @IBAction func deletePin(_ sender: Any) {
