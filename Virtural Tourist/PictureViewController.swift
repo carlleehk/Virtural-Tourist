@@ -25,6 +25,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
     
     var image: UIImage?
     
+    @IBOutlet weak var collectionFlow: UICollectionViewFlowLayout!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionLabel: UIButton!
     @IBOutlet weak var map: MKMapView!
@@ -40,6 +41,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        flowLayOut()
         collectionView.dataSource = self
         collectionView.delegate = self
         let centerCoordinate = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
@@ -276,6 +278,14 @@ extension PictureViewController: NSFetchedResultsControllerDelegate{
             updatedIndexPath.append(indexPath! as NSIndexPath)
         default: break
         }
+    }
+    
+    func flowLayOut(){
+        let space: CGFloat = 1.5
+        let dimension = view.frame.size.width >= view.frame.size.height ? (view.frame.size.width - (5 * space)) / 6.0 : (view.frame.size.width - (2*space))/3.0
+        collectionFlow.minimumInteritemSpacing = space
+        collectionFlow.minimumLineSpacing = space
+        collectionFlow.itemSize = CGSize(width: dimension, height: dimension)
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

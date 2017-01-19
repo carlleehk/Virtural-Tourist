@@ -160,6 +160,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="qVP-og-4xP"/>
                     <connections>
+                        <outlet property="collectionFlow" destination="B1z-fF-xlW" id="SF1-xP-lrW"/>
                         <outlet property="collectionLabel" destination="3yt-sE-gW8" id="UDM-lf-FRO"/>
                         <outlet property="collectionView" destination="SLP-KO-DNN" id="jQY-xD-1Sf"/>
                         <outlet property="map" destination="eT0-fp-Psv" id="xX4-0e-mUh"/>
