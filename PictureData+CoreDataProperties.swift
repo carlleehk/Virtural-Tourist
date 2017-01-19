@@ -2,7 +2,7 @@
 //  PictureData+CoreDataProperties.swift
 //  Virtural Tourist
 //
-//  Created by Carl Lee on 1/18/17.
+//  Created by Carl Lee on 1/19/17.
 //  Copyright © 2017 Carl Lee. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ extension PictureData {
     }
 
     @NSManaged public var photoData: NSData?
+    @NSManaged public var picURL: String?
     @NSManaged public var location: Location?
 
 }

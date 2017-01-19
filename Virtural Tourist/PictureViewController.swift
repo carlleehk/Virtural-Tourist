@@ -70,6 +70,7 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if let fc = fetchedResultsController{
+            print("there is going to be \(fc.sections![section].numberOfObjects) cells")
             return fc.sections![section].numberOfObjects
         } else{
             return 0
@@ -78,16 +79,36 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let picURL = fetchedResultsController?.object(at: indexPath) as! PictureData
-        print(picURL)
+        let picDatas = fetchedResultsController?.object(at: indexPath) as! PictureData
+        print(picDatas)
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picture", for: indexPath) as! PictureCollectionViewCell
         
         
-        if picURL.photoData != nil{
+        if picDatas.photoData != nil{
             cell.activityIndicator.stopAnimating()
-            image = UIImage(data: picURL.photoData as! Data)
+            image = UIImage(data: picDatas.photoData as! Data)
             cell.picture.image = image
+        } else{
+            cell.activityIndicator.startAnimating()
+            let url = picDatas.picURL
+            downloadImage(imagePath: url!) { (data, error) in
+                if error != nil{
+                    print(error!)
+                } else{
+                    
+                    print("Downloading Image")
+                    let picData = PictureData(image: data as NSData?, url: nil, context: self.stack.context)
+                    picData.location = self.location
+                    do{
+                        try self.stack.saveContext()
+                    } catch{
+                        print("Error while saving")
+                    }
+        
+                }
+            }
+            
         }
         
         
@@ -147,16 +168,14 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
                 for items in result!{
                     let imageURLString = items[Constants.FlickrResponseKeys.MediumURL] as? String
                     print("URLs:\(imageURLString!)")
-                    
-                    let data = NSData(contentsOf: NSURL(string: imageURLString!) as! URL)
-                    let picData = PictureData(image: data!, context: self.stack.context)
-                    picData.location = self.location
+                    let picURL = PictureData(image: nil, url: imageURLString, context: self.stack.context)
+                    picURL.location = self.location
                     do{
                         try self.stack.saveContext()
                     } catch{
                         print("Error while saving")
                     }
-                    print(picData)
+                    //print(picData)
                 }
             } else{
                 print("some error")
@@ -190,6 +209,24 @@ class PictureViewController: BaseViewController, UICollectionViewDataSource, UIC
         }
     }
 
+    
+    func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
+        let session = URLSession.shared
+        let imgURL = NSURL(string: imagePath)
+        let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
+        
+        let task = session.dataTask(with: request as URLRequest) {data, response, downloadError in
+            
+            if downloadError != nil {
+                completionHandler(nil, "Could not download image \(imagePath)")
+            } else {
+                
+                completionHandler(data, nil)
+            }
+        }
+        
+        task.resume()
+    }
     
     
     func executeSearch(){

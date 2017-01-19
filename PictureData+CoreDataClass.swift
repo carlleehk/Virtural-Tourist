@@ -12,12 +12,13 @@ import CoreData
 @objc(PictureData)
 public class PictureData: NSManagedObject {
     
-    convenience init(image: NSData, context: NSManagedObjectContext){
+    convenience init(image: NSData?, url: String?, context: NSManagedObjectContext){
         
         if let ent = NSEntityDescription.entity(forEntityName: "PictureData", in: context){
             
             self.init(entity: ent, insertInto: context)
             self.photoData = image
+            self.picURL = url
             
         } else{
             fatalError("Unable to find entity name")
